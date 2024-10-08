@@ -1,0 +1,64 @@
+name: Build Redmi 4X (Santoni) Images
+
+on:
+  push:
+  workflow_dispatch:
+  
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out build configurations
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static
+
+      - name: Clone pmbootstrap
+        run: |
+          git clone --depth=1 https://gitlab.com/postmarketOS/pmbootstrap.git
+          mkdir -p ~/.local/bin
+          ln -s "$PWD/pmbootstrap/pmbootstrap.py" ~/.local/bin/pmbootstrap
+          pmbootstrap --version
+
+      - name: Initialize pmbootstrap for Redmi 4X (Santoni)
+        run: |
+          echo -e 'xiaomi\nsantoni\n\nedge\nminimal\nnone\nnone\nqcom-msm8953\nnone\nn\n' | pmbootstrap init
+          
+      - name: Set up kernel and build config
+        run: |
+          # Update boot partition size for Redmi 4X
+          pmbootstrap config boot_size 256
+
+      - name: Build kernel for Redmi 4X (Santoni)
+        run: |
+          pmbootstrap build linux-postmarketos-qcom-msm8953
+
+      - name: Build rootfs for minimal postmarketOS
+        run: |
+          pmbootstrap install --no-sparse --split
+
+      - name: Create artifact directories
+        run: |
+          mkdir -p out
+          mkdir -p out_raw
+
+      - name: Export boot.img and rootfs
+        run: |
+          pmbootstrap export out_raw/
+          cp -R -u -p -L out_raw/* out/ || true
+
+          # Compress the generated images
+          xz -T0 -9e -v out/*.img
+          ls -la out/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: redmi-4x-santoni
+          path: out/*
+          retention-days: 7
