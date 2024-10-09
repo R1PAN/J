@@ -41,10 +41,11 @@ jobs:
           #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > .config/pmbootstrap_v3.cfg
           #pmbootstrap install
           
-           yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
+           yes '' | ./pmbootstrap/pmbootstrap.py init
            sudo mv pmbootstrap_v3.cfg -v /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 -v /home/runner/.config/pmbootstrap_v3.cfg
-           yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
+           yes '' | ./pmbootstrap/pmbootstrap.py init
+           ./pmbootstrap/pmbootstrap.py install
      
       - name: Create artifact directories
         run: |
