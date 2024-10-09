@@ -4,7 +4,6 @@ on:
   push:
   workflow_dispatch:
   
-
 jobs:
   build-image:
     runs-on: ubuntu-latest
@@ -16,27 +15,27 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static
+          sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python3-venv python3-pip
 
       - name: Clone pmbootstrap
         run: |
           git clone --depth=1 https://gitlab.com/postmarketOS/pmbootstrap.git
-          mkdir -p ~/.local/bin
-          ln -s "$PWD/pmbootstrap/pmbootstrap.py" ~/.local/bin/pmbootstrap
-          pmbootstrap --version
+
+      - name: Create and activate virtual environment
+        run: |
+          # Membuat lingkungan virtual
+          python3 -m venv pmbootstrap-venv
+          source pmbootstrap-venv/bin/activate
+
+          # Menginstal pmbootstrap dengan pip
+          cd pmbootstrap
+          pip install .
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
-          # Mengaktifkan lingkungan virtual pmbootstrap
-          if [ ! -d "pmbootstrap-venv" ]; then
-          echo "Lingkungan virtual tidak ditemukan. Membuat lingkungan virtual baru..."
-          python3 -m venv pmbootstrap-venv
-          fi
-
-          echo "Mengaktifkan lingkungan virtual..."
           source pmbootstrap-venv/bin/activate
-
-          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npant
+          
+          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > /tmp/pmbootstrap.conf
           pmbootstrap install
 
       - name: Create artifact directories
@@ -46,6 +45,7 @@ jobs:
 
       - name: Export boot.img and rootfs
         run: |
+          source pmbootstrap-venv/bin/activate
           pmbootstrap export out_raw/
           cp -R -u -p -L out_raw/* out/ || true
 
