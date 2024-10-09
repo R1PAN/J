@@ -35,12 +35,9 @@ jobs:
           yes ' ' | pmbootstrap init
           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
-           #pmbootstrap install --password root
-           pmbootstrap install --password root --android-recovery-zip --recovery-install-partition=data
-
-      - name: Create flashable ZIP
-        run: |
-          mv $HOME/.local/var/pmbootstrap/chroot_android-recovery.zip redmi-4x-santoni-flashable.zip
+           pmbootstrap install --password root
+           pmbootstrap export
+          mv /tmp/postmarketOS-export/pmos-*.zip redmi-4x-santoni-flashable.zip
 
       - name: Upload flashable ZIP
         uses: actions/upload-artifact@v4
