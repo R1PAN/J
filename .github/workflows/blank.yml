@@ -32,25 +32,19 @@ jobs:
           # Menginisialisasi konfigurasi untuk Redmi 4X (Santoni)
           #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > .config/pmbootstrap_v3.cfg
           #pmbootstrap install
+          yes ' ' | pmbootstrap init
           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
-           yes '' | pmbootstrap init
-           pmbootstrap install --password root
+           #pmbootstrap install --password root
+           pmbootstrap install --password root --android-recovery-zip --recovery-install-partition=data
 
-           pmbootstrap export
-          pmbootstrap flasher zip
-
-      - name: Create artifact directories
+      - name: Create flashable ZIP
         run: |
-          mkdir -p out
-          cp $HOME/.local/var/pmbootstrap/chroot_rootfs.zip out/
+          mv $HOME/.local/var/pmbootstrap/chroot_android-recovery.zip redmi-4x-santoni-flashable.zip
 
-      - name: Upload artifacts
+      - name: Upload flashable ZIP
         uses: actions/upload-artifact@v4
         with:
           name: redmi-4x-santoni-flashable-zip
-          path: out/*
+          path: redmi-4x-santoni-flashable.zip
           retention-days: 7
-          
-     
-      
