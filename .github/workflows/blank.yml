@@ -34,13 +34,10 @@ jobs:
           # Menginisialisasi konfigurasi untuk Redmi 4X (Santoni)
           #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > .config/pmbootstrap_v3.cfg
           #pmbootstrap install
-          
-          # yes '' | ./pmbootstrap/pmbootstrap.py init
-           
-           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
+          sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
-           yes '' | ./pmbootstrap/pmbootstrap.py init
-           ./pmbootstrap/pmbootstrap.py install
+           yes '' | pmbootstrap init
+           pmbootstrap install
      
       - name: Create artifact directories
         run: |
