@@ -34,7 +34,7 @@ jobs:
           #pmbootstrap install
           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
-           pmbootstrap init -c /home/runner/.config/pmbootstrap_v3.cfg
+           pmbootstrap -c /home/runner/.config/pmbootstrap_v3.cfg -y init
            pmbootstrap install --password root
            pmbootstrap export
           mv /tmp/postmarketOS-export/pmos-*.zip redmi-4x-santoni-flashable.zip
