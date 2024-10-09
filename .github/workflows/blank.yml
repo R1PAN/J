@@ -42,8 +42,8 @@ jobs:
           #pmbootstrap install
           
            yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
-           sudo mv pmbootstrap_v3.cfg -v .config/pmbootstrap_v3.cfg
-           sudo chmod 777 -v .config/pmbootstrap_v3.cfg
+           sudo mv pmbootstrap_v3.cfg -v /home/runner/.config/pmbootstrap_v3.cfg
+           sudo chmod 777 -v /home/runner/.config/pmbootstrap_v3.cfg
            yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
      
       - name: Create artifact directories
