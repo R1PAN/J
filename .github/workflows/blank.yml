@@ -14,7 +14,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-         sudo apt-get install -y aria2c git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python3-venv python3-pip
+         sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python3-venv python3-pip
 
       - name: Clone pmbootstrap
         run: |
