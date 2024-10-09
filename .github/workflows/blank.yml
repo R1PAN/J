@@ -41,9 +41,10 @@ jobs:
           #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > .config/pmbootstrap_v3.cfg
           #pmbootstrap install
           
-           yes '' | ./pmbootstrap/pmbootstrap.py init
-           sudo mv pmbootstrap_v3.cfg -v /home/runner/.config/pmbootstrap_v3.cfg
-           sudo chmod 777 -v /home/runner/.config/pmbootstrap_v3.cfg
+          # yes '' | ./pmbootstrap/pmbootstrap.py init
+           mkdir -p /home/runner/.config
+           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
+           sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
            yes '' | ./pmbootstrap/pmbootstrap.py init
            ./pmbootstrap/pmbootstrap.py install
      
