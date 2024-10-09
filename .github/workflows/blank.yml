@@ -14,9 +14,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-         pwd
-         ls /home
-         ls -lha /home
+         
          sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python-is-python3 python3-venv python3-pip
 
       - name: Clone pmbootstrap
@@ -38,25 +36,21 @@ jobs:
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
            yes '' | pmbootstrap init
            pmbootstrap install --password root
-     
+
+           pmbootstrap export
+          pmbootstrap flasher zip
+
       - name: Create artifact directories
         run: |
           mkdir -p out
-          mkdir -p out_raw
-
-      - name: Export boot.img and rootfs
-        run: |
-          
-          pmbootstrap export out_raw/
-          cp -R -u -p -L out_raw/* out/ || true
-
-          # Compress the generated images
-          xz -T0 -9e -v out/*.img
-          ls -la out/
+          cp $HOME/.local/var/pmbootstrap/chroot_rootfs.zip out/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: redmi-4x-santoni
+          name: redmi-4x-santoni-flashable-zip
           path: out/*
           retention-days: 7
+          
+     
+      
