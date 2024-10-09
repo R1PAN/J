@@ -27,7 +27,7 @@ jobs:
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
-          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npan\ndefault\nconsole\nn\nnone\nen_US\nxiaomi-santoni\ny\ny" | pmbootstrap init
+          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npant
           pmbootstrap install
 
       - name: Create artifact directories
