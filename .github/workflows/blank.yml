@@ -27,20 +27,8 @@ jobs:
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
-          echo -e 'xiaomi\nsantoni\n\nedge\nminimal\nnone\nnone\nqcom-msm8953\nnone\nn\n' | pmbootstrap init
-          
-      - name: Set up kernel and build config
-        run: |
-          # Update boot partition size for Redmi 4X
-          pmbootstrap config boot_size 256
-
-      - name: Build kernel for Redmi 4X (Santoni)
-        run: |
-          pmbootstrap build linux-postmarketos-qcom-msm8953
-
-      - name: Build rootfs for minimal postmarketOS
-        run: |
-          pmbootstrap install --no-sparse --split
+          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npan\ndefault\nconsole\nn\nnone\nen_US\nxiaomi-santoni\ny\ny" | pmbootstrap init
+          pmbootstrap install
 
       - name: Create artifact directories
         run: |
