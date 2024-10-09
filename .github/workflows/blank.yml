@@ -30,7 +30,7 @@ jobs:
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
           # Menginisialisasi konfigurasi untuk Redmi 4X (Santoni)
-          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" | pmbootstrap init
+          #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" | pmbootstrap init
           #pmbootstrap install
           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
