@@ -29,7 +29,8 @@ jobs:
 
           # Menginstal pmbootstrap dengan pip
           cd pmbootstrap
-          pip install .
+          pip3 install tomli
+          pip3 install .
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
