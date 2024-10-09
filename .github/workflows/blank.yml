@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt-get install -y git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python3-venv python3-pip
+          sudo apt-get install -y aria2c git gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu make bc bison flex libssl-dev libelf-dev qemu-user-static python3-venv python3-pip
 
       - name: Clone pmbootstrap
         run: |
@@ -26,19 +26,24 @@ jobs:
           # Membuat lingkungan virtual
           python3 -m venv pmbootstrap-venv
           source pmbootstrap-venv/bin/activate
-
+          HOME=$(pwd)
           # Menginstal pmbootstrap dengan pip
           cd pmbootstrap
           pip3 install tomli
           pip3 install .
+          cd $HOME
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
-          source pmbootstrap-venv/bin/activate
+          # Menginisialisasi konfigurasi untuk Redmi 4X (Santoni)
+          #echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > .config/pmbootstrap_v3.cfg
+          #pmbootstrap install
           
-          echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npantheon" > /tmp/pmbootstrap.conf
-          pmbootstrap install
-
+           yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
+           sudo mv pmbootstrap_v3.cfg -v .config/pmbootstrap_v3.cfg
+           sudo chmod 777 -v .config/pmbootstrap_v3.cfg
+           yes '' | ./pmbootstrap/pmbootstrap.py --details-to-stdout init
+     
       - name: Create artifact directories
         run: |
           mkdir -p out
@@ -46,7 +51,7 @@ jobs:
 
       - name: Export boot.img and rootfs
         run: |
-          source pmbootstrap-venv/bin/activate
+          
           pmbootstrap export out_raw/
           cp -R -u -p -L out_raw/* out/ || true
 
