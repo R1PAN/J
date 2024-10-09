@@ -37,7 +37,7 @@ jobs:
           sudo mv pmbootstrap.cfg /home/runner/.config/pmbootstrap_v3.cfg
            sudo chmod 777 /home/runner/.config/pmbootstrap_v3.cfg
            yes '' | pmbootstrap init
-           pmbootstrap install
+           pmbootstrap install --password root
      
       - name: Create artifact directories
         run: |
