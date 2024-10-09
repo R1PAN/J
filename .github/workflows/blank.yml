@@ -27,6 +27,15 @@ jobs:
 
       - name: Initialize pmbootstrap for Redmi 4X (Santoni)
         run: |
+          # Mengaktifkan lingkungan virtual pmbootstrap
+          if [ ! -d "pmbootstrap-venv" ]; then
+          echo "Lingkungan virtual tidak ditemukan. Membuat lingkungan virtual baru..."
+          python3 -m venv pmbootstrap-venv
+          fi
+
+          echo "Mengaktifkan lingkungan virtual..."
+          source pmbootstrap-venv/bin/activate
+
           echo -e "$HOME/.local/var/pmbootstrap\nedge\nxiaomi\nsantoni\npant
           pmbootstrap install
 
